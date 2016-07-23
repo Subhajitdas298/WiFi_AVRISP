@@ -1,0 +1,117 @@
+<!DOCTYPE html> 
+<html> 
+    <head> 
+        <title>ESP WiFi Configuration Server</title> 
+        <meta charset= "UTF-8" > 
+        <meta name= "viewport" content= "width=device-width, initial-scale=1.0" > 
+        <style type= "text/css" > 
+            form{ 
+                text-align: center; 
+                margin: auto; 
+                align-content: center; 
+            } 
+            table{ 
+                margin: auto; 
+                align-content: center; 
+                text-align: center; 
+                border-style: solid; 
+                border-width: 1px; 
+                background-color: #00bcd4; 
+                color: snow; 
+            } 
+            #header{ 
+                font-size: 200%; 
+                font-weight: bold; 
+            } 
+            #btn{ 
+                background-color: snow; 
+                border-style: solid; 
+                border-width: 1px; 
+            } 
+			table#t01 tr:nth-child(odd) {
+   background-color:#fff;
+}
+        </style> 
+        <!-- dynamically generated script -->
+        <script type="text/javascript" src="data.js"></script>
+        <script>
+            function init() {
+                document.getElementById("host").innerHTML = host;
+                document.getElementById("wifimode").innerHTML = wifimode;
+                document.getElementById("enc").innerHTML = (enc === "0" ? "Open" : "Protected");
+                document.getElementById("ssid").innerHTML = ssid;
+                document.getElementById("configmode").innerHTML = (configmode === "0" ? "Auto" : "Manual");
+                document.getElementById("ip2").innerHTML = ip;
+                if (configmode === "1") {
+                    document.getElementById("ip").innerHTML = ip;
+                    document.getElementById("gateway").innerHTML = gateway;
+                    document.getElementById("subnet").innerHTML = subnet;
+                } else if (configmode === "0"){
+                    document.getElementById("ipop1").style.display = "none";
+                    document.getElementById("ipop2").style.display = "none";
+                    document.getElementById("ipop3").style.display = "none";
+                }
+            }
+        </script>
+    </head> 
+    <body onload="init()"> 
+        <div> 
+            <table> 
+                <tr> 
+                    <td colspan= "2" ><span id= "header" >WiFi Configuration</span></td> 
+                </tr> 
+                <tr>
+                    <td>Hostname :</td>
+                    <td id="host"></td>
+                </tr>
+                <tr><td><br></td></tr>  <!-- blank space -->
+                <tr> 
+                    <td>Mode:</td>
+                    <td id="wifimode"></td> 
+                </tr>
+                <tr> 
+                    <td>Type:</td>
+                    <td id="enc"></td> 
+                </tr>
+                <tr> 
+                    <td>SSID :</td> 
+                    <td id="ssid"></td>
+                </tr>
+                <tr><td><br></td></tr>  <!-- blank space -->
+                <!-- IP configuration start -->
+                <tr>
+                    <td>IP config:</td>
+                    <td id="configmode"></td>
+                </tr>
+                <!-- manual config start -->
+                <tr id="ipop1">
+                    <td>IP address</td>
+                    <td id="ip"></td>
+                </tr>
+                <tr id="ipop2">
+                    <td>Gateway</td>
+                    <td id="gateway"></td>
+                </tr>
+                <tr id="ipop3">
+                    <td>Subnet</td>
+                    <td id="subnet"></td>
+                </tr>
+                <!-- manual config end -->
+                <!-- IP configuration end -->
+                <tr>
+                    <td colspan="2"><br><a href="config.html">Change Config</a></td>
+                </tr>
+                <tr><td><br></td></tr>  <!-- blank space -->
+                <tr>
+                    <td colspan="2">Tip: Please connect to <span id="ip2"></span>:384<br>
+                        to upload program to AVR (AVR ISP)
+                    </td>
+                </tr>
+				<tr>
+                    <td colspan="2">Created by Subhajit Das 25/06/2016
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>

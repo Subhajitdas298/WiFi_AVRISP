@@ -1,0 +1,179 @@
+<!DOCTYPE html> 
+<html> 
+    <head> 
+        <title>ESP WiFi Configuration Server</title> 
+        <meta charset= "UTF-8" > 
+        <meta name= "viewport" content= "width=device-width, initial-scale=1.0" > 
+        <style type= "text/css" > 
+            form{ 
+                text-align: center; 
+                margin: auto; 
+                align-content: center; 
+            } 
+            table{ 
+                margin: auto; 
+                align-content: center; 
+                text-align: center; 
+                border-style: solid; 
+                border-width: 1px; 
+                background-color: #00bcd4; 
+                color: snow; 
+            } 
+            #header{ 
+                font-size: 200%; 
+                font-weight: bold; 
+            } 
+            #btn{ 
+                background-color: snow; 
+                border-style: solid; 
+                border-width: 1px; 
+            } 
+            table td:nth-child(odd) {
+                text-align: right;
+            }
+            table td:nth-child(even) {
+                text-align: left;
+            }
+        </style> 
+        <!-- dynamically generated script -->
+        <script type="text/javascript" src="host.js"></script>
+        <script type="text/javascript" src="wifilist.js"></script>
+        <script type= "text/javascript" >
+            function init() {
+                try {
+                    // set host
+                    document.getElementById("hstl1").value = host;
+                    document.getElementById("hstl2").innerHTML = host;
+                } catch (e) {
+                }
+
+                try {
+                    // add options to wifilist
+                    var wifiList = document.getElementById("wifilist");
+                    for (var i = 0; i < Options.length; i++) {
+                        var optnode = document.createElement("option");
+                        optnode.value = Options[i].ssid;
+                        wifiList.appendChild(optnode);
+                    }
+                } catch (e) {
+                }
+
+                disableManualIP();
+                disablePass();
+				checkSecurity();
+            }
+
+            function checkSecurity() {
+                try {
+                    var ssid = document.getElementById("ssid").value;
+                    for (var i = 0; i < Options.length; i++) {
+                        if (ssid == Options[i].ssid) {
+                            if (Options[i].enc == "f") {
+                                document.getElementById("ep").checked = false;
+                                document.getElementById("dp").checked = true;
+                                disablePass();
+                            } else if (Options[i].enc == "t") {
+                                document.getElementById("dp").checked = false;
+                                document.getElementById("ep").checked = true;
+                                enablePass();
+                            }
+                        }
+                    }
+                } catch (e) {
+                }
+            }
+
+            // functions to enable/disable options
+            function disableManualIP() {
+                document.getElementById("ipop1").style.display = "none";
+                document.getElementById("ipop2").style.display = "none";
+                document.getElementById("ipop3").style.display = "none";
+            }
+            function enableManualIP() {
+                document.getElementById("ipop1").style.display = "table-row";
+                document.getElementById("ipop2").style.display = "table-row";
+                document.getElementById("ipop3").style.display = "table-row";
+            }
+            function disablePass() {
+                document.getElementById("passfield").style.display = "none";
+            }
+            function enablePass() {
+                document.getElementById("passfield").style.display = "table-row";
+            }
+        </script> 
+    </head> 
+    <body onload="init()"> 
+        <div> 
+            <form action= "updateconfig" method= "post" > 
+                <table> 
+                    <tr> 
+                        <td colspan= "2" ><span id= "header" >WiFi Configuration</span></td> 
+                    </tr> 
+                    <tr>
+                        <td>Hostname :</td>
+                        <td><input type="text" name="host" id="hstl1"></td>
+                    </tr>
+                    <tr><td><br></td></tr>  <!-- blank space -->
+                    <tr> 
+                        <td>Mode:</td>
+                        <td>
+                            <input type="radio" name="wifimode" value="ap">Direct
+                            <input type="radio" name="wifimode" value="sta" checked="checked">Connect
+                        </td> 
+                    </tr>
+                    <tr> 
+                        <td>Type:</td>
+                        <td>
+                            <input type="radio" name="encryption" value="true" onclick="enablePass()" id="ep">Protected
+                            <input type="radio" name="encryption" value="false" checked="checked" onclick="disablePass()" id="dp">Open
+                        </td> 
+                    </tr>
+                    <tr> 
+                        <td>SSID :</td> 
+                        <td><input name="ssid" id="ssid" list= "wifilist"  onkeyup="checkSecurity()" onchange="checkSecurity()">
+                            <datalist id= "wifilist" >
+                            </datalist>
+                        </td>
+                    </tr>
+                    <tr id="passfield">
+                        <td>Password :</td>
+                        <td><input type="password" name="pass" id="pass"></td>
+                    </tr>
+                    <tr><td><br></td></tr>  <!-- blank space -->
+                    <!-- IP configuration start -->
+                    <tr>
+                        <td>IP config:</td>
+                        <td>
+                            <input type="radio" name="configmode" value="auto" checked="checked" onclick="disableManualIP()">Auto
+                            <input type="radio" name="configmode" value="manual" onclick="enableManualIP()">Manual
+                        </td>
+                    </tr>
+                    <!-- manual config start -->
+                    <tr id="ipop1">
+                        <td>IP address</td>
+                        <td><input type="text" name="ip"></td>
+                    </tr>
+                    <tr id="ipop2">
+                        <td>Gateway</td>
+                        <td><input type="text" name="gateway"></td>
+                    </tr>
+                    <tr id="ipop3">
+                        <td>Subnet</td>
+                        <td><input type="text" name="subnet"></td>
+                    </tr>
+                    <!-- manual config end -->
+                    <!-- IP configuration end -->
+                    <tr>
+                        <td colspan="2" style="text-align: center"><br><input id="btn" type="submit" value="Connect"></td>
+                    </tr>
+                    <tr><td><br></td></tr>  <!-- blank space -->
+                    <tr>
+                        <td colspan="2" style="text-align: center">Tip: Please connect to <span id="hstl2"></span>:384<br>
+                            to upload program to AVR (AVR ISP)
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </body>
+</html>
