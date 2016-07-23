@@ -33,10 +33,10 @@
  | GPIO14  | SCK       | D13     |
  | GPIO5   | RESET     | RST     |
   -------------------------------
-  Note: MISO,MOSI,SCK connections are unchanable, 
-        but RESET (default GIPO5 canbe programatically changed.
-
-  For RESET use a GPIO other than 0, 2 and 15 (bootselect pins), and apply an
+  Note:
+  MISO,MOSI,SCK connections are unchanable, 
+  but RESET (default GIPO5 canbe programatically changed.
+  Use a GPIO other than 0, 2 and 15 (bootselect pins), and apply an
   external pullup/down so that the target is normally running.
 */
 
