@@ -7,7 +7,7 @@
   The system provides-
 
   An AVR ISP programmer for programming over ISP for any generic AVR chip.
-  Provides a we based configuration interface using library at ESP_ConfigStorage at git.
+  Provides a we based configuration interface using library at [ESP_ConfigStorage](https://github.com/Subhajitdas298/ESP_ConfigStorage/) at git.
   Simple to use and implement. Instructions provided at instructables (working).
   
 ##ISP connection
